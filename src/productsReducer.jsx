@@ -5,14 +5,21 @@ const productsSlice = createSlice({
   name: "products",
   initialState: productsList,
   reducers: {
-    // Agrega la función addProduct dentro de los reducers
     addProduct: (state, action) => {
-      // Esta función debe manejar la lógica para agregar un nuevo producto al estado
-      state.push(action.payload); // Agrega el nuevo producto a la lista
-      console.log("Nuevo producto agregado al estado:", action.payload); // Agrega un console.log
+      state.push(action.payload);
+      console.log("Nuevo producto agregado al estado:", action.payload);
+    },
+    updateProduct: (state, action) => {
+      const { codName, productName, quantity, price } = action.payload;
+      const productToUpdate = state.find(product => product.codName === codName);
+      if (productToUpdate) {
+        productToUpdate.productName = productName;
+        productToUpdate.quantity = quantity;
+        productToUpdate.price = price;
+      }
     },
   },
 });
 
-export const { addProduct } = productsSlice.actions; // Exporta addProduct
+export const { addProduct, updateProduct } = productsSlice.actions;
 export default productsSlice.reducer;

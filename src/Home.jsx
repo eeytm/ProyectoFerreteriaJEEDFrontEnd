@@ -5,22 +5,20 @@ import { Link } from "react-router-dom";
 function Home() {
   // Acceder al estado de productos utilizando useSelector
   const products = useSelector((state) => state.products);
-  console.log(products)
+  console.log(products);
 
   const handleDelete = (producto) => {
-    console.log(producto, 'Hola ')
-    alert("hola desde editar")
+    console.log(producto);
   }
 
   const handleEdit = (producto) => {
-    console.log('Desde editar')
-    alert("hola desde editar")
+    console.log(producto);
   }
 
   return (
-    <div className="container ">
+    <div className="container">
       <h2>Crud App with Jason Server</h2>
-      <Link to="/create"className='btn btn-success my-3'>Create +</Link>
+      <Link to="/create" className='btn btn-success my-3'>Create +</Link>
       <table className="table">
         <thead>
           <tr>
@@ -39,10 +37,9 @@ function Home() {
               <td>${Number(product.price).toFixed(2)}</td>
 
               <td>
-                <button onClick={() => handleEdit(product)} className="btn btn-sm btn-primary">Edit</button>
+              <Link to={`/edit/${product.codName}`} onClick={() => handleEdit(product)} className="btn btn-sm btn-primary">Edit</Link>
                 <button onClick={() => handleDelete(product)} className="btn btn-sm btn-danger ms-2">Delete</button>
-                
-                </td>
+              </td>
             </tr>
           ))}
         </tbody>
