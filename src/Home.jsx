@@ -6,6 +6,15 @@ function Home() {
   const products = useSelector((state) => state.products);
   console.log(products)
 
+  const handleDelete = (producto) => {
+    console.log(producto, 'Hola ')
+  }
+
+  const handleEdit = (producto) => {
+    console.log('Desde editar')
+    alert("hola desde editar")
+  }
+
   return (
     <div className="container ">
       <h2>Crud App with Jason Server</h2>
@@ -27,8 +36,8 @@ function Home() {
               <td>{product.amount}</td>
               <td>${product.price.toFixed(2)}</td>
               <td>
-                <button className="btn btn-sm btn-primary">Edit</button>
-                <button className="btn btn-sm btn-primary">Edit</button>
+                <button onClick={() => handleDelete(product)} className="btn btn-sm btn-primary">Delete</button>
+                <button onClick={() => handleEdit(product)} className="btn btn-sm btn-primary">Edit</button>
                 </td>
             </tr>
           ))}
