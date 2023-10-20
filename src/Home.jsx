@@ -8,6 +8,7 @@ function Home() {
 
   const handleDelete = (producto) => {
     console.log(producto, 'Hola ')
+    alert("hola desde editar")
   }
 
   const handleEdit = (producto) => {
