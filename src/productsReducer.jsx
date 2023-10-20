@@ -18,8 +18,16 @@ const productsSlice = createSlice({
         productToUpdate.price = price;
       }
     },
+    deleteProduct: (state, action) => {
+      const { codName } = action.payload;
+      const productToDelete = state.find(product => product.codName === codName);
+      if (productToDelete) {
+        return state.filter(f => f.codName !== codName);
+      }
+    },
   },
+    
 });
 
-export const { addProduct, updateProduct } = productsSlice.actions;
+export const { addProduct, updateProduct, deleteProduct } = productsSlice.actions;
 export default productsSlice.reducer;

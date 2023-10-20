@@ -1,14 +1,16 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { deleteProduct } from "./productsReducer";
+
+import "./Home.css"; // Importa un archivo CSS personalizado
 
 function Home() {
-  // Acceder al estado de productos utilizando useSelector
   const products = useSelector((state) => state.products);
-  console.log(products);
+  const dispatch = useDispatch();
 
   const handleDelete = (producto) => {
-    console.log(producto);
+    dispatch(deleteProduct({ codName: producto.codName }));
   }
 
   const handleEdit = (producto) => {
@@ -17,15 +19,22 @@ function Home() {
 
   return (
     <div className="container">
-      <h2>Crud App with Jason Server</h2>
-      <Link to="/create" className='btn btn-success my-3'>Create +</Link>
-      <table className="table">
+        <div className="logo-and-text">
+          <img src="JEED 1000X1000.png" alt="Ferretería Jeed Logo" />
+          <div className="text">
+            <p className="big-text">FERRETERIA Y HERRAMIENTAS JEED</p>
+          </div>
+        </div>
+      <Link to="/create" className="btn btn-truper my-3">Create +</Link>
+
+      <table className="table table-truper">
         <thead>
           <tr>
-            <th>Product Code</th>
-            <th>Product Name</th>
-            <th>Quantity</th>
-            <th>Price</th>
+            <th className="truper-table-header">Product Code</th>
+            <th className="truper-table-header">Product Name</th>
+            <th className="truper-table-header">Quantity</th>
+            <th className="truper-table-header">Price</th>
+            <th className="truper-table-header">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -35,10 +44,10 @@ function Home() {
               <td>{product.productName}</td>
               <td>{product.quantity}</td>
               <td>${Number(product.price).toFixed(2)}</td>
-
               <td>
-              <Link to={`/edit/${product.codName}`} onClick={() => handleEdit(product)} className="btn btn-sm btn-primary">Edit</Link>
-                <button onClick={() => handleDelete(product)} className="btn btn-sm btn-danger ms-2">Delete</button>
+                <Link to={`/edit/${product.codName}`} onClick={() => handleEdit(product)} className="btn btn-truper">Edit</Link>
+                <button onClick={() => handleDelete(product)} className="btn btn-truper delete-btn ms-2">Delete</button>
+
               </td>
             </tr>
           ))}
