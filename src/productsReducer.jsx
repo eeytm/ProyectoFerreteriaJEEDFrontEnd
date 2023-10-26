@@ -25,6 +25,7 @@ const productsSlice = createSlice({
         return state.filter(f => f.codName !== codName);
       }
     },
+    
   },
     
 });
