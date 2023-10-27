@@ -20,7 +20,8 @@ function Home() {
   const handleEdit = (producto) => {
     console.log(producto);
   }
-
+ console.log (process.env.REACT_APP_BACKEND_URL)
+ 
   const handleSearch = (searchTerm) => {
     // Realiza la búsqueda en la lista de productos
     const results = products.filter(
