@@ -1,0 +1,62 @@
+/* Home.css */
+.container {
+    background-color: #333; /* Fondo gris oscuro */
+    color: #fff; /* Texto blanco */
+    padding: 20px;
+  }
+  
+  .btn {
+    background-color: #ff9900; /* Botones anaranjados */
+    color: #fff; /* Texto blanco */
+  }
+  
+  .btn.btn-truper {
+    background-color: #007bff; /* Botones azules */
+  }
+  
+  .btn.btn-truper.delete-btn {
+    background-color: #ff3333; /* Botón de delete rojo */
+  }
+  
+  /* Estilo para las tablas */
+  .table {
+    background-color: #fff; /* Fondo de la tabla blanco */
+    color: #ccc; /* Texto gris oscuro */
+    border: 1px solid #ccc; /* Borde de la tabla gris claro */
+    border-radius: 5px;
+  }
+  
+  .truper-table-header {
+    background-color: #007bff; /* Encabezados de tabla azules */
+    color: #fff; /* Texto blanco en los encabezados */
+  }
+  
+  /* Estilos para los vínculos */
+  a {
+    color: #fff; /* Texto de enlaces en blanco */
+  }
+  
+  a:hover {
+    color: #007bff; /* Cambio de color al pasar el mouse sobre los enlaces */
+  }
+  
+  /* Estilo para el logo y texto */
+  .logo-and-text {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centra horizontalmente el contenido */
+  }
+  
+  img {
+    max-height: 100px; /* Altura máxima del logotipo (ajusta según tus preferencias) */
+    margin-right: 20px; /* Agrega espacio entre el logotipo y el texto */
+  }
+  
+  /* Estilo para el texto grande */
+  .big-text {
+    font-size: 2rem; /* Tamaño de fuente (ajusta según tus preferencias) */
+    font-weight: bold; /* Texto en negrita */
+    font-family: 'Arial', sans-serif; /* Tipo de fuente (ajusta según tus preferencias) */
+    color: #ff9900; /* Color del texto (anaranjado) */
+  }
+  
