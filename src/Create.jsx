@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addProduct } from "./productsReducer"; // Importa la función addProduct desde productsReducer
+import backendAPI from "./API/api";
+import { useNavigate } from "react-router-dom";
 
 function Create() {
   const dispatch = useDispatch(); // Obtiene la función de despacho
+  const navigate = useNavigate()
 
   const [formData, setFormData] = useState({
     codName: "",
@@ -37,12 +40,28 @@ function Create() {
       price: formData.price,
     };
 
-    // Despachar la acción para agregar un producto
+    const isValid = addProductDb(newProduct)
+    if (isValid) {
+      // Despachar la acción para agregar un producto
     dispatch(addProduct(newProduct)); // Usa la función de despacho para agregar el producto
-
-    // Luego, puedes guardar el producto en tu estado global o realizar otras acciones necesarias.
-    console.log("Nuevo producto:", newProduct);
+    }
+    navigate("/home")
   };
+
+  const addProductDb = async (producto) => {
+    const response = await backendAPI.post("/products", {
+      codName: producto.codName,
+      productName: producto.productName,
+      quantity: producto.quantity,
+      price: producto.price,
+    })
+    if (response.status === 201){
+      return true
+    }else{
+      return false
+    }
+    
+  }
 
   return (
     <div className="d-flex w-100 vh-100 justify-content-center align-items-center">

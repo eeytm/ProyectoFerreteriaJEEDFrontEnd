@@ -3,13 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { updateProduct } from './productsReducer';
 import './Update.css'; // Importa tu archivo CSS de estilos
+import backendAPI from './API/api';
 
 export default function Update() {
   const { codName } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.products);
-
+  const products = useSelector((state) => state.products.products);
+  const productId = useSelector((state) => state.products.singleProduct);
   const productToEdit = products.find((product) => product.codName === codName);
 
   const [editedProduct, setEditedProduct] = useState(
@@ -37,9 +38,28 @@ export default function Update() {
   };
 
   const handleUpdate = () => {
-    dispatch(updateProduct(editedProduct));
-    navigate('/');
+    const isValid = updateProductDb (editedProduct);
+    if(isValid){
+      dispatch(updateProduct(editedProduct));
+    }
+    
+      navigate('/home');
   };
+
+  const updateProductDb = async (producto) => {
+    const response = await backendAPI.put(`/products/${productId}`, {
+      codName: producto.codName,
+      productName: producto.productName,
+      quantity: producto.quantity,
+      price: producto.price,
+    })
+    console.log(response);
+    if (response.status === 200){
+      return true
+    }else{
+      return false
+    }
+  }
 
   return (
     <div className="d-flex w-100 vh-100 justify-content-center align-items-center">
