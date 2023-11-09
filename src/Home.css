@@ -60,3 +60,36 @@
     color: #ff9900; /* Color del texto (anaranjado) */
   }
   
+  /* Estilo para el popup */
+.popup {
+  background-color: #333; /* Fondo gris oscuro */
+  color: #fff; /* Texto blanco */
+  position: absolute;
+  right: 10px; /* Alinea el popup a la derecha */
+  top: 10px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Estilo para los botones en el popup */
+.popup button {
+  margin-right: 10px;
+  background-color: #007bff; /* Botón de agregar en verde */
+  color: #fff;
+}
+
+/* Estilo para el botón de cerrar en el popup */
+.popup .close-button {
+  background-color: #ff3333; /* Botón de cerrar en rojo */
+}
+
+/* Estilos para los botones en el lado derecho */
+.action-button {
+  background-color: #007bff; /* Botones anaranjados */
+  color: #fff; /* Texto blanco */
+  margin-left: 10px; /* Agrega espacio a la izquierda para separar los botones */
+  float: right; /* Alinea los botones a la derecha */
+}
+
+/* Si deseas separar los botones más, puedes ajustar el margen izquierdo según tus preferencias. */

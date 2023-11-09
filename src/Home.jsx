@@ -14,6 +14,70 @@ function Home() {
   const [searchResults, setSearchResults] = useState(products); // Inicializa con todos los productos
 
 
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [addedProductCount, setAddedProductCount] = useState(0);
+
+
+  const handleAddToSelected = (product) => {
+    setSelectedProducts([...selectedProducts, product]);
+    setAddedProductCount(addedProductCount + 1);
+  };
+  
+  const handleRemoveFromSelected = () => {
+    if (selectedProducts.length > 0) {
+      setSelectedProducts(selectedProducts.slice(0, -1)); // Elimina el último producto
+      setAddedProductCount(addedProductCount - 1); // Resta uno del contador
+    }
+  };
+  
+
+  const handleCalculateTotal = () => {
+    const calculatedTotal = selectedProducts.reduce(
+      (acc, product) => acc + product.price,
+      0
+    );
+    setTotal(calculatedTotal);
+  };
+
+  const handleOpenPopup = () => {
+    setShowPopup(true);
+  };
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
+
+  const generateInvoice = () => {
+    // Crear un nuevo documento PDF para la factura
+    const doc = new jsPDF();
+  
+    // Agregar los detalles de la factura
+    doc.setFontSize(16);
+    doc.text("Factura", 10, 10);
+    doc.setFontSize(12);
+    doc.text("Productos en la factura:", 10, 20);
+  
+    let yOffset = 30;
+    selectedProducts.forEach((product, index) => {
+      doc.text(`${product.productName} - $${product.price.toFixed(2)}`, 20, yOffset);
+      yOffset += 10;
+    })
+  
+    // Calcular el total de la factura
+    const invoiceTotal = selectedProducts.reduce((total, product) => total + product.price, 0);
+  
+    // Agregar el total de la factura
+    doc.text(`Total: $${invoiceTotal.toFixed(2)}`, 10, yOffset + 10);
+  
+    // Guardar el PDF de la factura
+    doc.save('factura.pdf');
+  };
+  
+
+
   useEffect(() => {
     setSearchResults(products); // Actualiza los resultados cuando cambie la lista de productos
   }, [products]);
@@ -114,10 +178,56 @@ function Home() {
       </div>
 
       {/* Barra de búsqueda en la misma ventana de Home */}
-          <div className="container">
-          {/* Resto de tu código... */}
-          <button onClick={generatePdf}>Print PDF Report</button>
-        </div>
+            <div className="container">
+        {/* Resto de tu código... */}
+        <button onClick={generatePdf} className="action-button">Print PDF Report</button>
+        <button onClick={handleOpenPopup} className="action-button">Generate Invoice</button>
+      </div>
+
+
+
+      {showPopup && (
+      <div className="popup">
+        <h2>Add Products to Invoice</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((product) => (
+              <tr key={product.id}>
+                <td>{product.productName}</td>
+                <td>${product.price.toFixed(2)}</td>
+                <td>
+                  <button
+                    onClick={() => handleAddToSelected(product)}
+                    className="btn btn-add-to-invoice"
+                  >
+                    +1
+                  </button>
+                  
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <button onClick={handleCalculateTotal}>Calculate Total</button>
+        <p>Total: ${total.toFixed(2)}</p>
+        <button onClick={generateInvoice}>Print Invoice</button>
+        <button onClick={handleClosePopup} className="close-button">
+          Close
+        </button>
+          <button onClick={handleRemoveFromSelected} className="btn btn-remove-from-invoice">
+        -1
+      </button>
+    </div>
+    )}
+
+
+
       <Search onSearch={handleSearch} products={products} setSearchResults={setSearchResults} />
       <div>
         <Link
