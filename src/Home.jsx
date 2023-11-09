@@ -5,12 +5,14 @@ import Search from "./Search"; // Importa el componente de búsqueda
 import "./Home.css";
 import { Link } from 'react-router-dom'; // Importa useNavigate
 import backendAPI from "./API/api";
+import jsPDF from "jspdf";
 
 function Home() {
   const products = useSelector((state) => state.products.products);
   console.log(products.products, "d");
   const dispatch = useDispatch();
   const [searchResults, setSearchResults] = useState(products); // Inicializa con todos los productos
+
 
   useEffect(() => {
     setSearchResults(products); // Actualiza los resultados cuando cambie la lista de productos
@@ -51,6 +53,57 @@ function Home() {
 
 
 
+  const generatePdf = () => {
+    // Crear un nuevo documento PDF
+    const doc = new jsPDF();
+  
+    // Establecer la fuente y el tamaño de texto para el título
+    doc.setFont('helvetica');
+    doc.setFontSize(16);
+  
+    // Configurar el color del título
+    doc.setTextColor(0, 0, 0); // Texto en negro
+  
+    // Agregar el título
+    doc.text('Lista de Productos', 10, 10);
+  
+    // Restablecer la fuente y el tamaño de texto para los detalles de productos
+    doc.setFont('helvetica');
+    doc.setFontSize(12);
+  
+    // Configurar el color del texto
+    doc.setTextColor(0, 0, 0); // Texto en negro
+  
+    // Iterar sobre los productos y agregarlos al PDF
+    let yOffset = 20;
+    products.forEach((product, index) => {
+      yOffset += 10;
+  
+      // Agregar el número de producto
+      doc.text(`Producto ${index + 1}:`, 10, yOffset);
+  
+      // Configurar el color del código de producto
+      doc.setTextColor(0, 0, 255); // Texto en azul
+      // Agregar el código de producto
+      doc.text(`Código: ${product.codName}`, 20, yOffset + 10);
+  
+      // Restablecer el color del texto
+      doc.setTextColor(0, 0, 0); // Texto en negro
+  
+      // Agregar el nombre de producto, cantidad y precio
+      doc.text(`Nombre: ${product.productName}`, 20, yOffset + 20);
+      doc.text(`Cantidad: ${product.quantity}`, 20, yOffset + 30);
+      doc.text(`Precio: $${product.price.toFixed(2)}`, 20, yOffset + 40);
+  
+      yOffset += 50; // Aumentar el espaciado entre productos
+    });
+  
+    // Guardar el PDF con un nombre específico
+    doc.save('productos.pdf');
+  };
+  
+
+
   return (
     <div className="container">
       <div className="logo-and-text">
@@ -61,6 +114,10 @@ function Home() {
       </div>
 
       {/* Barra de búsqueda en la misma ventana de Home */}
+          <div className="container">
+          {/* Resto de tu código... */}
+          <button onClick={generatePdf}>Print PDF Report</button>
+        </div>
       <Search onSearch={handleSearch} products={products} setSearchResults={setSearchResults} />
       <div>
         <Link
